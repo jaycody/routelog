@@ -32,7 +32,7 @@ For more on rules files, see `man 5 routelog`, for more on routelog see
 
 ### License
 
-routelog is made available for use under a 3-clause BSD license (see: [LICENSE.txt](./LICENSE.txt).
+routelog is made available for use under a 3-clause BSD license (see: [LICENSE.txt](./LICENSE.txt)).
 
 ### Usage
 
@@ -48,4 +48,4 @@ routelog is made available for use under a 3-clause BSD license (see: [LICENSE.t
 
 ### Authors
 
-Matthew Story <matt.story@axial.net>
+Matthew Story (matt.story@axial.net)
