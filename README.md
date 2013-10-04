@@ -6,8 +6,9 @@ Specific Language. routelog takes a rules file in the following format:
     /pattern/    command $1 $2
 
 And operates on one or more log files, executing `command $1 $2` for all lines
-matching `/pattern/` substituting the first and second items in the log line
-for `$1` and `$2` respectively. A rules file with the following directive:
+matching the regular expression `/pattern/` substituting the first and second
+items in the log line for `$1` and `$2` respectively. A rules file with the
+following directive:
 
     /ERROR/      echo "$*" | mail -s "Error executing ${3%:} on $2 at $1" error@example.com
 
