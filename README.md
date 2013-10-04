@@ -45,3 +45,7 @@ routelog is made available for use under a 3-clause BSD license (see: [LICENSE.t
             rather than ignoring them.
         -n, --no-output
             Suppress the (default) behavior of printing each log line to stdout.
+
+### Authors
+
+Matthew Story <matt.story@axial.net>
