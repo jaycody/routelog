@@ -43,6 +43,10 @@ For more on rules files, see `man 5 routelog`, for more on routelog see
         -n, --no-output
             Suppress the (default) behavior of printing each log line to stdout.
 
+    More documentation is available via for the routelog program
+    (`man 1 routelog`) and routelog rules file formats (`man 5 routelog`)
+    after install.
+
 ### License
 
 routelog is made available for use under a 3-clause BSD license (see: [LICENSE.txt](./LICENSE.txt)).
