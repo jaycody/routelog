@@ -30,10 +30,6 @@ For more on rules files, see `man 5 routelog`, for more on routelog see
 
     sudo python setup.py install
 
-### License
-
-routelog is made available for use under a 3-clause BSD license (see: [LICENSE.txt](./LICENSE.txt)).
-
 ### Usage
 
     routelog [-h|--help] [-c|--comments] [-n|--no-output] rules_file [ log_file [...]]
@@ -45,6 +41,10 @@ routelog is made available for use under a 3-clause BSD license (see: [LICENSE.t
             rather than ignoring them.
         -n, --no-output
             Suppress the (default) behavior of printing each log line to stdout.
+
+### License
+
+routelog is made available for use under a 3-clause BSD license (see: [LICENSE.txt](./LICENSE.txt)).
 
 ### Authors
 
