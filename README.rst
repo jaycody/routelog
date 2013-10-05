@@ -26,6 +26,15 @@ and the body::
 
     2012-12-07T12:06:11-05:00 server1 program_name: ERROR foo
 
+Rules files are processed by the routelog program::
+
+    routelog mail-errors.rules /var/log/*.log
+
+The routelog program acts as a filter, passing all log lines to stdout, which
+is useful for doing additional processing in a single pipeline::
+
+    routelog mail-errors.rules /var/log/*.log | bzip2 > todays-logs.`date +%s`.bz2
+
 For more on rules files, see `man 5 routelog`, for more on routelog see
 `man 1 routelog`.
 
@@ -58,7 +67,7 @@ Usage
 Optional Arguments:
 -------------------
 
--h, --help           Print an extended usage to stdout
+-h, --help           Print an extended usage to stdout and exit.
 -c, --comments       Treat comments in log lines (anything following a ' #') as arguments, rather than ignoring them.
 -n, --no-output      Suppress the (default) behavior of printing each log line to stdout.
 
@@ -69,7 +78,8 @@ after install.
 License
 -------
 
-routelog is made available for use under a 3-clause BSD license LICENSE.txt.
+routelog is made available for use under a 3-clause BSD license (see:
+LICENSE.txt in the package).
 
 Authors
 -------
