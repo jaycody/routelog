@@ -37,11 +37,13 @@ is available via `pip <https://pypi.python.org/pypi?:action=display&name=routelo
 
 Installing v0.1 From Pip
 ------------------------
+
 ::
     sudo pip install routelog==0.1
 
 From v0.1 From Source
 ---------------------
+
 ::
     wget https://github.com/axialmarket/routelog/archive/routelog-0.1.tar.gz | tar vzxf -
     cd routelog-0.1
@@ -49,6 +51,7 @@ From v0.1 From Source
 
 Usage
 =====
+
 ::
     routelog [-h|--help] [-c|--comments] [-n|--no-output] rules_file [ log_file [...]]
 
@@ -73,4 +76,4 @@ routelog is made available for use under a 3-clause BSD license LICENSE.txt.
 Authors
 -------
 
-Matthew Story (`matt.story at axial.net <mailto:matt.story@axial.net>`_)
+Matthew Story (matt.story@axial.net)
