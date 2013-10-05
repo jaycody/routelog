@@ -1,7 +1,7 @@
 from distutils.core import setup
 
-with open('README.md') as file:
-    long_description = file.read()
+with open('README.rst') as f:
+    long_description = f.read()
 
 setup(
     name='routelog',
