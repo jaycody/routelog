@@ -70,9 +70,13 @@ Usage
 Optional Arguments:
 -------------------
 
--h, --help           Print an extended usage to stdout and exit.
--c, --comments       Treat comments in log lines (anything following a ' #') as arguments, rather than ignoring them.
--n, --no-output      Suppress the (default) behavior of printing each log line to stdout.
+-h, --help
+  Print an extended usage to stdout and exit.
+-c, --comments
+  Treat comments in log lines (anything following a ' #') as arguments, rather
+  than ignoring them.
+-n, --no-output
+  Suppress the (default) behavior of printing each log line to stdout.
 
 More documentation is available via for the routelog program
 (``man 1 routelog``) and routelog rules file formats (``man 5 routelog``)
