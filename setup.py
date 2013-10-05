@@ -1,5 +1,7 @@
 from distutils.core import setup
-from glob import glob
+
+with open('README.md') as file:
+    long_description = file.read()
 
 setup(
     name='routelog',
@@ -12,6 +14,6 @@ setup(
     url='https://github.com/axialmarket/routelog',
     license='3-BSD',
     description='A Flexible DSL For Processing Logs',
-    long_description=open('README.md').read()
+    long_description=long_description
 )
 
