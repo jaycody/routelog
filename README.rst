@@ -67,8 +67,8 @@ Usage
 
     routelog [-h|--help] [-c|--comments] [-n|--no-output] rules_file [ log_file [...]]
 
-Optional Arguments:
--------------------
+Optional Arguments
+------------------
 
 \-h, --help
   Print an extended usage to stdout and exit.
@@ -83,12 +83,12 @@ More documentation is available via for the routelog program
 after install.
 
 License
--------
+=======
 
 routelog is made available for use under a 3-clause BSD license (see:
 LICENSE.txt in the package).
 
 Authors
--------
+=======
 
 Matthew Story (matt.story@axial.net)
