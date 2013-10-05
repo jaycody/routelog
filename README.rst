@@ -51,8 +51,8 @@ Installing v0.1 From Pip
 
     sudo pip install routelog==0.1
 
-From v0.1 From Source
----------------------
+Installing v0.1 From Source
+---------------------------
 
 ::
 
