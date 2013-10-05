@@ -48,12 +48,14 @@ Installing v0.1 From Pip
 ------------------------
 
 ::
+
     sudo pip install routelog==0.1
 
 From v0.1 From Source
 ---------------------
 
 ::
+
     wget https://github.com/axialmarket/routelog/archive/routelog-0.1.tar.gz | tar vzxf -
     cd routelog-0.1
     sudo python setup.py install
@@ -62,6 +64,7 @@ Usage
 =====
 
 ::
+
     routelog [-h|--help] [-c|--comments] [-n|--no-output] rules_file [ log_file [...]]
 
 Optional Arguments:
