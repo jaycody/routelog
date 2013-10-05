@@ -41,8 +41,10 @@ For more on rules files, see ``man 5 routelog``, for more on routelog see
 Installing
 ==========
 
-The routelog project lives on `github <github.com/axialmarket/routelog>`_, and
-is available via `pip <https://pypi.python.org/pypi?:action=display&name=routelog>`_.
+The routelog project lives on github_, and is available via pip_.
+
+.. _github: https://github.com/axialmarket/routelog
+.. _pip: https://pypi.python.org/pypi?:action=display&name=routelog
 
 Installing v0.1 From Pip
 ------------------------
