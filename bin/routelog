@@ -51,74 +51,69 @@ def shout(msg, f=sys.stderr):
     print >> f, '{0}: {1}'.format(_PROG, msg)
 
 def clean_signal(signum, frame):
-    raise Fatal('exited with signal {0}'.format(signum), exit=1)
+    raise Fatal('exited with signal {0}'.format(signum), exit_code=1)
 
 class Fatal(Exception):
-    def __init__(self, msg, exit=111):
+    def __init__(self, msg, exit_code=111):
         shout(msg)
         self.message = msg
-        self.exit = exit
+        self.exit_code = exit_code
 
 class Usage(Exception):
     def __init__(self, asked_for=0):
         if asked_for:
             print __doc__
-            self.exit = 0
+            self.exit_code = 0
         else:
             shout(__doc__.split('\n')[0])
-            self.exit = 100
-
-############# PARSER
-_BOUNDING_TOK = '/'
-_COMMENT_TOK = '#'
-_ESCAPE_TOK = '\\'
-_DELIMIT_TOKS = ' \t'
+            self.exit_code = 100
 
 class ParseError(Fatal):
     pass
 
 def _parse(rulesf):
-    rules, line_no = [], 0
-    while True:
-        line = rulesf.readline()
-        line_no += 1
-        if not line:
-            break
+    '''The routelog rules file parser'''
+    ############# PARSER TOKENS
+    _BOUNDING_TOK = '/'
+    _COMMENT_TOK = '#'
+    _ESCAPE_TOK = '\\'
+    _DELIMIT_TOKS = ' \t'
+    _CMD_PART_RE = re.compile(r'^[^ \t]*[ \t]+')
+    _PATTERN_PART_RE = re.compile(r'[ \t]+.*$')
 
+    rules = []
+    for line_no, line in enumerate(rulesf, 1):
         line = line.rstrip('\n').lstrip(_DELIMIT_TOKS)
+
         # comment or empty
         if line.startswith(_COMMENT_TOK) or 0 == len(line):
             continue
 
-        # normal case
-        # regex              cmd
-        cmd = re.sub(r'^[^ \t]*[ \t]+', "", line)
-        pattern = re.sub(r'[ \t]+.*$', "", line)
-
-        # special case
+        # case: bounded regex
         # /regex/            cmd
-        if pattern.startswith(_BOUNDING_TOK):
+        if line.startswith(_BOUNDING_TOK):
             # Parsing State-Machine vars
             # started: we've seen 1 _BOUNDING_TOK already
             # stopped: we've seen 2 _BOUNDING_TOK
             #     esc: the last char was _ESCAPE_TOK
             started = stopped = esc = 0
 
-            pattern = ""
             # ye-old char-wise walk
-            for i in range(len(line)):
-                cur = line[i]
+            pattern, cur_pos = "", 0
+            for cur_pos, cur in enumerate(line):
+                # handle escape conditions -- we only escape / and \, all
+                # other \'s are literal
+                if esc and cur in ( _ESCAPE_TOK, _BOUNDING_TOK, ):
+                    pattern = pattern[:-1]
                 # handle boundary states
-                if cur == _BOUNDING_TOK:
-                    if started and not esc:
-                        i += 1
+                elif cur == _BOUNDING_TOK:
+                    # if started -- stop
+                    if started:
                         stopped = 1
                         break
-                    elif esc:
-                        pattern = pattern[:-1]
-                    elif not esc and not started:
-                        started = 1
-                        continue
+                    # else start
+                    started = 1
+                    continue
 
                 # handle escape state
                 if cur == _ESCAPE_TOK and not esc:
@@ -130,31 +125,38 @@ def _parse(rulesf):
                     pattern = ''.join([ pattern, cur ])
 
             # construct the cmd
-            cmd = line[i:]
             if not stopped:
                 raise ParseError('line {0}:  unclosed pattern:'\
                                  ' {1}'.format(line_no, line))
-            elif cmd and not cmd.startswith(tuple(list(_DELIMIT_TOKS))):
+            cmd = line[cur_pos+1:]
+            if cmd and not cmd.startswith(tuple(list(_DELIMIT_TOKS))):
                 raise ParseError('line {0}: extra value after'\
                                  ' pattern'.format(line_no))
+        else:
+            # case: unbounded regex
+            # regex              cmd
+            cmd = re.sub(_CMD_PART_RE, "", line)
+            pattern = re.sub(_PATTERN_PART_RE, "", line)
 
         cmd = cmd.strip(_DELIMIT_TOKS)
         if not len(cmd):
             raise ParseError('line {0}: no command found:'\
                              ' {1}'.format(line_no, line))
 
-        rules.append(( pattern, cmd, line_no, ))
+        rules.append(( re.compile(pattern), cmd, line_no, ))
 
     return rules
 
-############# INTERPRETER
-_EARLY_SUCCESS = 99
 
 class EarlySuccess(Exception):
     pass
 
 def _handle_rc(rc, cmd, logfname, line, line_no):
     '''Handle the response code of an executed command'''
+
+    ############# INTERPRETER VARS
+    _EARLY_SUCCESS = 99
+
     if os.WIFEXITED(rc):
         rc = os.WEXITSTATUS(rc)
         if _EARLY_SUCCESS == rc:
@@ -281,7 +283,7 @@ def main(args):
               e.opt))
         return 100
     except (Fatal, Usage), e:
-        return e.exit
+        return e.exit_code
     finally:
         if rulesf and rulesf != sys.stdin:
             rulesf.close()
