@@ -116,10 +116,7 @@ def _parse(rulesf):
                     continue
 
                 # handle escape state
-                if cur == _ESCAPE_TOK and not esc:
-                    esc = 1
-                else:
-                    esc = 0
+                esc = (_ESCAPE_TOK and not esc)
 
                 if started:
                     pattern = ''.join([ pattern, cur ])
